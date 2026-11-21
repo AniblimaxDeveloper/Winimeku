@@ -24,24 +24,27 @@ jobs:
           flutter-version: '3.19.0'
           channel: 'stable'
 
-      - name: Clean & Build User App (Wibinime)
+      - name: Build User App (Wibinime)
         run: |
           cd user_app
-          flutter clean
           flutter pub get
           flutter build apk --release
 
-      - name: Clean & Build Admin App (Wibinime Admin)
+      - name: Build Admin App (Wibinime Admin)
         run: |
           cd admin_app
-          flutter clean
           flutter pub get
           flutter build apk --release
 
-      - name: Upload Both APKs
-        uses: actions/upload-artifact@v4
+      # Mengunggah kedua APK langsung ke GitHub Release
+      - name: Upload APKs to GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
         with:
-          name: Winimeku-APKs
-          path: |
+          tag_name: v1.0.0
+          name: Release v1.0.0
+          files: |
             user_app/build/app/outputs/flutter-apk/app-release.apk
             admin_app/build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
