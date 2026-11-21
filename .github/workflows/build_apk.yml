@@ -24,15 +24,17 @@ jobs:
           flutter-version: '3.19.0'
           channel: 'stable'
 
-      - name: Build User App (Wibinime)
+      - name: Clean & Build User App (Wibinime)
         run: |
           cd user_app
+          flutter clean
           flutter pub get
           flutter build apk --release
 
-      - name: Build Admin App (Wibinime Admin)
+      - name: Clean & Build Admin App (Wibinime Admin)
         run: |
           cd admin_app
+          flutter clean
           flutter pub get
           flutter build apk --release
 
