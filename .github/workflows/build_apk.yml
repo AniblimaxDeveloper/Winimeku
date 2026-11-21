@@ -5,6 +5,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+# Izinkan GITHUB_TOKEN untuk membuat Release dan mengunggah file
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,7 +40,6 @@ jobs:
           flutter pub get
           flutter build apk --release
 
-      # Mengunggah kedua APK langsung ke GitHub Release
       - name: Upload APKs to GitHub Release
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main'
